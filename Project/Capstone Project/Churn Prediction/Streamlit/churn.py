@@ -66,7 +66,7 @@ my_dict_1[['salary','department']] = pd.concat([my_dict_1.salary.map(salary_assi
 # my_dict_1
 
 
-# st.table(my_dict_1)
+st.table(my_dict_1)
 
 # st.dataframe(my_dict_1)
 
@@ -80,5 +80,8 @@ else:
 
 # Button
 if st.button("Predict"):
-    prediction = pred_1
-    st.success("Will the employee leave? : '{}'".format(prediction))
+    prediction = pred_1    
+    if prediction == "Yes":
+        st.error("Will the employee leave? : '{}'".format(prediction))
+    else:
+        st.success("Will the employee leave? : '{}'".format(prediction))
