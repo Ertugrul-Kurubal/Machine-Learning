@@ -5,11 +5,11 @@ import pandas as pd
 
 # Title
 st.header("Churn Prediction")
-st.subheader("Company Evaluation Results")
+st.subheader("Employee Churn Analysis")
 
 # Inputs
 st.sidebar.header("Features Selection")
-depertment = st.sidebar.selectbox('Select Department', ['sales', 'accounting', 'hr', 'technical', 'support', 'management', 'IT', 'product_mng', 'marketing', 'RandD'])
+depertment = st.sidebar.selectbox('Department', ['sales', 'accounting', 'hr', 'technical', 'support', 'management', 'IT', 'product_mng', 'marketing', 'RandD'])
 salary = st.sidebar.selectbox('Salary', ['low', 'medium', 'high'])
 satisfaction_level = st.sidebar.slider("Satisfaction",0,100,1)
 last_evaluation = st.sidebar.slider("Last Evaluation",0,100,1)
@@ -17,7 +17,7 @@ number_project = st.sidebar.slider("Project Number",0,10,1)
 average_montly_hours = st.sidebar.slider("Average Montly Working Hours",70,320,1)
 time_spend_company = st.sidebar.slider("Time Spend In Company Year",1,25,1)
 work_accident = st.sidebar.radio('Work Accident', ['Yes', 'No'])
-promotion_last_5years = st.sidebar.radio('Promotion Last 5 years', ['Yes', 'No'])
+promotion_last_5years = st.sidebar.radio('Promotion Last 5 Years', ['Yes', 'No'])
 
 if work_accident == "Yes":
     work_accident_1 = 1
@@ -34,7 +34,7 @@ last_evaluation_1 = round(last_evaluation/100, 2)
 
 # Image
 img = Image.open("D:\Data Scientist\Data Science\Machine-Learning\Project\Capstone Project\Churn Prediction\Streamlit\Churn.png")
-st.image(img, caption="Churn")
+st.image(img, caption="Churn Analysis")
 
 pred_model = st.selectbox('Select ML Model', ["GradientBoostingClassifier","RandomForestClassifier"])
 
@@ -65,13 +65,20 @@ my_dict_1 = pd.DataFrame.from_dict([my_dict])
 my_dict_1[['salary','department']] = pd.concat([my_dict_1.salary.map(salary_assignee),my_dict_1.department.map(deparment_assignee)],axis=1)
 # my_dict_1
 
-st.table(my_dict_1)
+
+# st.table(my_dict_1)
+
+# st.dataframe(my_dict_1)
 
 # Predict
 pred_result = model.predict(my_dict_1)
 
+if pred_result == 0:
+    pred_1 = "No"
+else:
+    pred_1 = "Yes"
 
 # Button
 if st.button("Predict"):
-    prediction = pred_result
-    st.success("Churn Prediction is '{}' ".format(int(prediction)))
+    prediction = pred_1
+    st.success("Will the employee leave? : '{}'".format(prediction))
